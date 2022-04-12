@@ -1,0 +1,20 @@
+Примеры правил проверки
+---------------------------
+Если выражение возвращает тру, то ошибка не выходит, если фолс то ошибка
+-----------------------------
+TSC Asset Attachment
+[DocFileDeferFlg] IS NOT NULL
+DOC-01 Сохранение записи без вложения невозможно!
+
+Opportunity Attachment
+IIf(BCHasRows("FINS Application","Opportunity","[Id]='"+[Oppty Id]+"' AND [JET Primary Opportunity Product Partner Name] = 'Уралсиб Жизнь'","All"), NOT BCHasRows("FINS  
+Application","Opportunity Attachment","[Oppty Id]='"+[Oppty Id]+"' AND NOT InList([OpptyFileExt], 'JPG,JPEG,PDF,URL,jpg,jpeg,pdf,url')","All"), 1=1)
+USB Document Type Check: Приложены файлы недопустимого формата. Допустимые форматы файлов jpg, .jpeg, .pdf
+
+Service Request Attachment
+NOT InList(GetProfileAttr('Primary Responsibility Name'),'TSC Credit controller,TSC Head of group CKK')
+USB MoveToED: Недоступно для Вас
+
+IIF([Address] IS NOT NULL, FindNoneOf(Mid([Address], 3), "0123456789") = 0, 1=1)
+
+[M/F] IS NOT NULL
