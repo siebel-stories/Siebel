@@ -1,0 +1,8 @@
+//Как что-нибудь вывести в файл в Server Script (на аплетах или бк, итд)
+
+var logFileName = "C:\\Siebel\\LOG\\percentCalc_"+contactId+".log";
+TheApplication().TraceOn(logFileName, "Allocation", "All");
+TheApplication().Trace("-------------------------------------------");
+TheApplication().Trace(contactId);
+TheApplication().Trace(allFound);
+TheApplication().TraceOff();
