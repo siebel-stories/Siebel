@@ -1,0 +1,13 @@
+--Как найти, какое правило сработало, если мы знаем только текст ошибки? 
+select s.name,ERR_MSG_TXT  from S_VALDN_RULE r, S_VALDN_RL_SET s where ERR_MSG_TXT 
+LIKE '%Населенный пункт%' and s.row_id=r.RULE_SET_ID  and s.STATUS_CD='Active'
+--В ответ будет наборы правил, которые могли выдать данную ошибку
+
+--Поиск наборов действий по набору правил, которые нашли по подстроке текста сообщения об ошибке
+select NAME, S_CT_ACTION_SET.* from S_CT_ACTION_SET where ACTIVE_FLG='Y' AND row_id in (
+select CT_ACTN_SET_ID from S_CT_ACTION where SVC_METHOD_NAME='Validate' AND SVC_CONTEXT in
+(select '"Rule Set Name", "' || s.name || '"'  from S_VALDN_RULE r, S_VALDN_RL_SET s where ERR_MSG_TXT 
+LIKE '%Населенный пункт%' and s.row_id=r.RULE_SET_ID  and s.STATUS_CD='Active')
+)
+
+--Далее можно найти Мероприятия просто в представлении, зная название набора действий
